@@ -67,7 +67,7 @@ resource "aws_route53_record" "this" {
 }
 
 
-resource "aws_route53_record" "this" {
+resource "aws_route53_record" "this_cname" {
   zone_id = data.aws_route53_zone.this.zone_id
   name    = "www.${var.domain}"
   type    = "CNAME"
