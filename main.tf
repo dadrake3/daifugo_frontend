@@ -67,6 +67,19 @@ resource "aws_route53_record" "this" {
 }
 
 
+resource "aws_route53_record" "this" {
+  zone_id = data.aws_route53_zone.this.zone_id
+  name    = "www.${var.domain}"
+  type    = "CNAME"
+  alias {
+    name = aws_s3_bucket_website_configuration.this.website_domain
+    # name = "s3-website-us-east-1.amazonaws.com"
+    zone_id                = aws_s3_bucket.this.hosted_zone_id
+    evaluate_target_health = true
+  }
+}
+
+
 resource "null_resource" "build_and_deploy" {
   triggers = {
     node_src     = sha1(join("", [for f in fileset(path.module, "src/**") : filesha1(f)]))
