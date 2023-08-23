@@ -49,7 +49,7 @@ function StartGameButton() {
   if (loading) return "data not fetched yet";
   if (error) return <p>{error.message}</p>;
 
-  return <button onClick={createGame as MouseEventHandler}>Start Game!</button>
+  return <button onClick={createGame as MouseEventHandler}>Start Game!!</button>
 };
 
 export default function App() {
