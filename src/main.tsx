@@ -1,10 +1,8 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import ReactDOM from 'react-dom/client'
+import App from './App.tsx'
+import './index.css'
 
-import { createAuthLink } from "aws-appsync-auth-link";
+import { createAuthLink, AuthOptions } from "aws-appsync-auth-link";
 import { createSubscriptionHandshakeLink } from "aws-appsync-subscription-link";
 
 import {
@@ -12,7 +10,7 @@ import {
   ApolloClient,
   InMemoryCache,
   HttpLink,
-  ApolloLink,
+  ApolloLink
 } from "@apollo/client";
 
 import appSyncConfig from "./aws-exports";
@@ -21,7 +19,7 @@ import appSyncConfig from "./aws-exports";
 const url = appSyncConfig.aws_appsync_graphqlEndpoint;
 const region = appSyncConfig.aws_appsync_region;
 
-const auth = {
+const auth: AuthOptions = {
   type: appSyncConfig.aws_appsync_authenticationType,
   apiKey: appSyncConfig.aws_appsync_apiKey,
   // jwtToken: async () => token, // Required when you use Cognito UserPools OR OpenID Connect. token object is obtained previously
@@ -40,21 +38,8 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-// root.render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>
-// );
-
-root.render(
+ReactDOM.createRoot(document.getElementById('root')!).render(
   <ApolloProvider client={client}>
     <App />
   </ApolloProvider>,
-);
-
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+)
