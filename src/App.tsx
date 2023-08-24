@@ -55,7 +55,7 @@ function StartGameButton() {
 export default function App() {
   return (
     <div>
-      <h2>My first Apollo app 🚀</h2>
+      <h2>My first Apollo app 🚀!</h2>
       {HandComponent("b802169b-8463-4c94-8a53-22dfd64addb4")}
       {StartGameButton()}
     </div>
