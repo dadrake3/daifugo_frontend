@@ -69,7 +69,7 @@ resource "aws_s3_bucket_website_configuration" "this" {
 }
 
 
-resource "null_resource" "build" {
+resource "null_resource" "build_and_deploy" {
   triggers = {
     node_src     = sha1(join("", [for f in fileset(path.module, "src/**") : filesha1(f)]))
     package_json = sha1(file("${path.module}/package.json"))
@@ -77,22 +77,11 @@ resource "null_resource" "build" {
 
   provisioner "local-exec" {
     working_dir = "."
-    command     = "npm ci && npm run build"
+    command     = <<EOF
+                  npm ci && npm run build
+                  aws s3 sync dist s3://${var.domain} --delete
+              EOF
   }
 
   depends_on = [aws_s3_bucket.this]
-}
-
-
-resource "null_resource" "deploy" {
-  triggers = {
-    dist = sha1(join("", [for f in fileset(path.module, "dist/**") : filesha1(f)]))
-  }
-
-  provisioner "local-exec" {
-    working_dir = "."
-    command     = "aws s3 sync dist s3://${var.domain} --delete"
-  }
-
-  depends_on = [null_resource.build]
 }
