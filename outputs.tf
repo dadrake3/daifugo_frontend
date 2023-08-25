@@ -10,9 +10,9 @@ output "bucket_domain_name" {
 output "website_endpoint" {
   value = aws_s3_bucket_website_configuration.this.website_endpoint
 }
-output "aws_cloudfront_distribution_id"{
+output "aws_cloudfront_distribution_id" {
   value = aws_cloudfront_distribution.this.id
 }
-output "aws_cloudfront_distribution_arn"{
+output "aws_cloudfront_distribution_arn" {
   value = aws_cloudfront_distribution.this.arn
 }

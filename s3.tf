@@ -33,21 +33,22 @@ data "aws_iam_policy_document" "this" {
       "s3:GetObject"
     ]
     principals {
-      type = "Service"
-      identifiers =  ["cloudfront.amazonaws.com"]
+      # type = "Service"
+      # identifiers =  ["cloudfront.amazonaws.com"]
+      type        = "AWS"
+      identifiers = ["*"]
     }
     resources = [
       "arn:aws:s3:::${var.domain}/*"
     ]
-    condition {
-    test = "StringEquals"
+    #   condition {
+    #     test = "StringEquals"
+    #     values = [
+    #       aws_cloudfront_distribution.this.arn
+    #     ]
 
-    values = [
-      aws_cloudfront_distribution.this.arn
-    ]
-
-    variable = "AWS:SourceArn"
-  }
+    #   variable = "AWS:SourceArn"
+    # }
   }
 }
 
